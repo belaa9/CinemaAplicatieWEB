@@ -1,19 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using CinemaAplicatieWEB.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Înregistrăm contextul pentru aplicație
 builder.Services.AddDbContext<CinemaAplicatieWEBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CinemaAplicatieWEBContext") ?? throw new InvalidOperationException("Connection string 'CinemaAplicatieWEBContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CinemaAplicatieWEBContext")));
 
-// Înregistrăm contextul pentru Identity
-builder.Services.AddDbContext<CinemaIdentityContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CinemaAplicatieWEBContext") ?? throw new InvalidOperationException("Connection string 'CinemaAplicatieWEBContext' not found.")));
+// Configurăm autentificarea cu cookie-uri
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login"; // Calea către pagina de login
+        options.LogoutPath = "/Logout"; // Calea către pagina de logout
+    });
 
-// Configurăm Identity
-builder.Services.AddDefaultIdentity<Microsoft.AspNetCore.Identity.IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<CinemaIdentityContext>();
+// Adăugăm suport pentru autorizare
+builder.Services.AddAuthorization();
 
 builder.Services.AddRazorPages();
 
