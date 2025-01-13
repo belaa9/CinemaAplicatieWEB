@@ -27,6 +27,7 @@ namespace CinemaAplicatieWEB.Pages.Users
         [BindProperty]
         public User User { get; set; } = default!;
 
+
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {

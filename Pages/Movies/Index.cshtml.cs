@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using CinemaAplicatieWEB.Data;
 using CinemaAplicatieWEB.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CinemaAplicatieWEB.Pages.Movies
 {
     public class IndexModel : PageModel
     {
-        private readonly CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext _context;
+        private readonly CinemaAplicatieWEBContext _context;
 
-        public IndexModel(CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext context)
+        public IndexModel(CinemaAplicatieWEBContext context)
         {
             _context = context;
         }
 
-        public IList<Movie> Movie { get;set; } = default!;
+        public List<Movie> Movies { get; set; } = new();
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            Movie = await _context.Movie.ToListAsync();
+            Movies = _context.Movie.ToList();
         }
     }
 }

@@ -1,0 +1,16 @@
+{
+  "Rows": 10,
+  "Columns": 15,
+  "Seats": [
+    {
+      "Row": 1,
+      "Column": 1,
+      "Type": "Regular"
+    },
+    {
+      "Row": 1,
+      "Column": 2,
+      "Type": "VIP"
+    }
+  ]
+}

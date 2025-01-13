@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,15 +11,15 @@ namespace CinemaAplicatieWEB.Pages.Showtimes
 {
     public class EditModel : PageModel
     {
-        private readonly CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext _context;
+        private readonly CinemaAplicatieWEBContext _context;
 
-        public EditModel(CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext context)
+        public EditModel(CinemaAplicatieWEBContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Showtime Showtime { get; set; } = default!;
+        public Showtime Showtime { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,19 +28,19 @@ namespace CinemaAplicatieWEB.Pages.Showtimes
                 return NotFound();
             }
 
-            var showtime =  await _context.Showtime.FirstOrDefaultAsync(m => m.Id == id);
-            if (showtime == null)
+            Showtime = await _context.Showtime.FindAsync(id);
+
+            if (Showtime == null)
             {
                 return NotFound();
             }
-            Showtime = showtime;
-           ViewData["HallId"] = new SelectList(_context.Hall, "Id", "Id");
-           ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Id");
+
+            ViewData["Movies"] = new SelectList(_context.Movie, "Id", "Title");
+            ViewData["Halls"] = new SelectList(_context.Hall, "Id", "Name");
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

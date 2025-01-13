@@ -2,25 +2,22 @@
 @model CinemaAplicatieWEB.Pages.Movies.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Movies List";
 }
 
-<h1>Index</h1>
+<h1>Movies</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Title)
+                @Html.DisplayNameFor(model => model.Movies[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Description)
+                @Html.DisplayNameFor(model => model.Movies[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Duration)
+                @Html.DisplayNameFor(model => model.Movies[0].Duration)
             </th>
             <th>
                 Genres
@@ -29,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Movie)
+        @foreach (var item in Model.Movies)
         {
             <tr>
                 <td>
@@ -42,7 +39,7 @@
                     @Html.DisplayFor(modelItem => item.Duration)
                 </td>
                 <td>
-                    @string.Join(", ", item.Genres) <!-- Afișează genurile ca un șir delimitat -->
+                    @item.Genres
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
@@ -53,3 +50,7 @@
         }
     </tbody>
 </table>
+
+<div>
+    <a asp-page="./Create">Create New</a>
+</div>

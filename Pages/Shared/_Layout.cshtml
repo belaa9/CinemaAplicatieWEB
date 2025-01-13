@@ -22,16 +22,21 @@
                         <li class="nav-item">
                             <a class="navbar-brand" asp-area="" asp-page="/Movies/Index">Movies</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="navbar-brand" asp-area="" asp-page="/Reservations/Index">Reservations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="navbar-brand" asp-area="" asp-page="/Users/Index">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="navbar-brand" asp-area="" asp-page="/Halls/Index">Halls</a>
-                        </li>
-                    </ul>
+                        </ul>
+                        <ul class="navbar-nav me-auto">
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="navbar-brand" asp-area="" asp-page="/Users/Index">Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="navbar-brand" asp-area="" asp-page="/Halls/Index">Halls</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="navbar-brand" asp-area="" asp-page="/Reservations/Index">Reservations</a>
+                                </li>
+                            }
+                        </ul>
                     <ul class="navbar-nav">
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {

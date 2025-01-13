@@ -5,7 +5,7 @@
 namespace CinemaAplicatieWEB.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateGenresWithValueComparer : Migration
+    public partial class Halls : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

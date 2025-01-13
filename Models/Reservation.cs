@@ -10,6 +10,6 @@
 
         // Navigation Properties
         public User User { get; set; }
-        public Showtime Showtime { get; set; }
+        public required Showtime Showtime { get; set; }
     }
 }

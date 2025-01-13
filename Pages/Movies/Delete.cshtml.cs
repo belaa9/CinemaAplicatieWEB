@@ -1,59 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using CinemaAplicatieWEB.Data;
 using CinemaAplicatieWEB.Models;
+using System.Threading.Tasks;
 
 namespace CinemaAplicatieWEB.Pages.Movies
 {
     public class DeleteModel : PageModel
     {
-        private readonly CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext _context;
+        private readonly CinemaAplicatieWEBContext _context;
 
-        public DeleteModel(CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext context)
+        public DeleteModel(CinemaAplicatieWEBContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Movie Movie { get; set; } = default!;
+        public Movie Movie { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+            Movie = await _context.Movie.FindAsync(id);
 
-            if (movie == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Movie = movie;
-            }
+            if (Movie == null) return NotFound();
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var movie = await _context.Movie.FindAsync(id);
+
             if (movie != null)
             {
-                Movie = movie;
-                _context.Movie.Remove(Movie);
+                _context.Movie.Remove(movie);
                 await _context.SaveChangesAsync();
             }
 

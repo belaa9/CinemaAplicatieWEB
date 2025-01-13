@@ -1,40 +1,19 @@
 ﻿@page
 @model CinemaAplicatieWEB.Pages.Showtimes.DeleteModel
-
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Showtime";
 }
 
-<h1>Delete</h1>
+<h1>Delete Showtime</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this Showtime?</h3>
 <div>
-    <h4>Showtime</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showtime.DateTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Showtime.DateTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showtime.Movie)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Showtime.Movie.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showtime.Hall)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Showtime.Hall.Id)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="Showtime.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+    <h4>Movie: @Model.Showtime.Movie.Title</h4>
+    <h4>Hall: @Model.Showtime.Hall.Name</h4>
+    <h4>Date & Time: @Model.Showtime.DateTime</h4>
 </div>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+</form>

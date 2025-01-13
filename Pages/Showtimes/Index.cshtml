@@ -1,48 +1,36 @@
 ﻿@page
 @model CinemaAplicatieWEB.Pages.Showtimes.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Showtimes";
 }
 
-<h1>Index</h1>
+<h1>Showtimes</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">Create New Showtime</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Showtime[0].DateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Showtime[0].Movie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Showtime[0].Hall)
-            </th>
+            <th>Movie</th>
+            <th>Hall</th>
+            <th>Date & Time</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Showtime) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hall.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Showtime)
+        {
+            <tr>
+                <td>@item.Movie.Title</td>
+                <td>@item.Hall.Name</td>
+                <td>@item.DateTime</td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

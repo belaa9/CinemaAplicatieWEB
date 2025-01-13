@@ -1,14 +1,21 @@
-﻿namespace CinemaAplicatieWEB.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace CinemaAplicatieWEB.Models
 {
     public class Showtime
     {
         public int Id { get; set; }
-        public int MovieId { get; set; }
-        public DateTime DateTime { get; set; }
-        public int HallId { get; set; }
 
-        // Navigation Properties
+        [Required]
+        public DateTime DateTime { get; set; }
+
+        [Required]
+        public int MovieId { get; set; }
         public Movie Movie { get; set; }
-        public Hall Hall { get; set; } // Add this property if missing
+
+        [Required]
+        public int HallId { get; set; }
+        public Hall Hall { get; set; }
     }
 }
