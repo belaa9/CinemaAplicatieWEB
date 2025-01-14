@@ -1,1 +1,47 @@
-﻿
+﻿@page
+@model CinemaAplicatieWEB.Pages.Movies.CreateModel
+
+@{
+    ViewData["Title"] = "Create Movie";
+}
+
+<h1>Create Movie</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Movie.Title" class="control-label"></label>
+        <input asp-for="Movie.Title" class="form-control" />
+        <span asp-validation-for="Movie.Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Movie.Description" class="control-label"></label>
+        <textarea asp-for="Movie.Description" class="form-control"></textarea>
+        <span asp-validation-for="Movie.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Movie.Duration" class="control-label"></label>
+        <input asp-for="Movie.Duration" class="form-control" />
+        <span asp-validation-for="Movie.Duration" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Movie.Genres" class="control-label">Genres (comma-separated)</label>
+        <input asp-for="Movie.Genres" class="form-control" placeholder="Enter genres separated by commas (e.g., Action, Drama, Comedy)" />
+        <span asp-validation-for="Movie.Genres" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

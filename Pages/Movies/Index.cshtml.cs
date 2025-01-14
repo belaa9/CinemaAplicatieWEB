@@ -19,7 +19,17 @@ namespace CinemaAplicatieWEB.Pages.Movies
 
         public void OnGet()
         {
-            Movies = _context.Movie.ToList();
+            Movies = _context.Movie
+                .AsEnumerable() // Mutăm evaluarea pe partea clientului
+                .Select(m => new Movie
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    Description = m.Description,
+                    Duration = m.Duration,
+                    Genres = string.Join(", ", m.AvailableGenres.Select(g => g.Name)) // Afișare genuri ca text
+                })
+                .ToList();
         }
     }
 }

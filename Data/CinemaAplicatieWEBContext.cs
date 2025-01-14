@@ -26,6 +26,8 @@ namespace CinemaAplicatieWEB.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Ignore<GenreOption>();
+
             modelBuilder.Entity<Reservation>()
                 .HasOne(r => r.User) // Legătura cu User
                 .WithMany() // Un User poate avea mai multe rezervări
