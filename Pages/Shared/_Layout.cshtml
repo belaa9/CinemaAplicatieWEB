@@ -22,6 +22,14 @@
                         <li class="nav-item">
                             <a class="navbar-brand" asp-area="" asp-page="/Movies/Index">Movies</a>
                         </li>
+     
+                            @if (User.IsInRole("user"))
+                        {
+                            <li class="nav-item">
+                                <a class="navbar-brand" asp-area="" asp-page="/Reservations/Create">Make a reservation</a>
+                            </li>
+                        }
+
                         </ul>
                         <ul class="navbar-nav me-auto">
                             @if (User.IsInRole("admin"))

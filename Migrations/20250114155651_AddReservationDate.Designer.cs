@@ -4,6 +4,7 @@ using CinemaAplicatieWEB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaAplicatieWEB.Migrations
 {
     [DbContext(typeof(CinemaAplicatieWEBContext))]
-    partial class CinemaAplicatieWEBContextModelSnapshot : ModelSnapshot
+    [Migration("20250114155651_AddReservationDate")]
+    partial class AddReservationDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,6 +74,39 @@ namespace CinemaAplicatieWEB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movie");
+                });
+
+            modelBuilder.Entity("CinemaAplicatieWEB.Models.Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("HallId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReservationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Seats")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HallId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reservation");
                 });
 
             modelBuilder.Entity("CinemaAplicatieWEB.Models.Showtime", b =>
@@ -326,34 +362,23 @@ namespace CinemaAplicatieWEB.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Reservation", b =>
+            modelBuilder.Entity("CinemaAplicatieWEB.Models.Reservation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("CinemaAplicatieWEB.Models.Hall", "Hall")
+                        .WithMany()
+                        .HasForeignKey("HallId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.HasOne("CinemaAplicatieWEB.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("HallId")
-                        .HasColumnType("int");
+                    b.Navigation("Hall");
 
-                    b.Property<DateTime>("ReservationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Seats")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HallId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reservation");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CinemaAplicatieWEB.Models.Showtime", b =>
@@ -424,25 +449,6 @@ namespace CinemaAplicatieWEB.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Reservation", b =>
-                {
-                    b.HasOne("CinemaAplicatieWEB.Models.Hall", "Hall")
-                        .WithMany()
-                        .HasForeignKey("HallId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CinemaAplicatieWEB.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hall");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

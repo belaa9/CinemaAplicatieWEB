@@ -29,9 +29,17 @@ namespace CinemaAplicatieWEB.Data
             modelBuilder.Ignore<GenreOption>();
 
             modelBuilder.Entity<Reservation>()
-                .HasOne(r => r.User) // Legătura cu User
-                .WithMany() // Un User poate avea mai multe rezervări
-                .HasForeignKey(r => r.UserId); // Cheia străină este UserId
+     .HasOne(r => r.Hall)
+     .WithMany()
+     .HasForeignKey(r => r.HallId)
+     .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
 
     }

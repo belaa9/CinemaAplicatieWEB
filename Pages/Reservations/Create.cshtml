@@ -8,8 +8,13 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="Reservation.ShowtimeId" class="control-label">Select Showtime</label>
-        <select asp-for="Reservation.ShowtimeId" class="form-control" asp-items="@(ViewData["Showtimes"] as SelectList)"></select>
+        <label asp-for="Reservation.UserId" class="control-label">User</label>
+        <select asp-for="Reservation.UserId" class="form-control" asp-items="@(ViewData["Users"] as SelectList)"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Reservation.HallId" class="control-label">Hall</label>
+        <select asp-for="Reservation.HallId" class="form-control" asp-items="@(ViewData["Halls"] as SelectList)"></select>
     </div>
 
     <h3>Select Seats</h3>
@@ -19,7 +24,7 @@
                 <th>Row</th>
                 @for (int i = 1; i <= 11; i++)
                 {
-                    <th>@i</th> <!-- Afișează numărul coloanei -->
+                    <th>@i</th>
                 }
             </tr>
         </thead>
@@ -27,7 +32,7 @@
             @for (char row = 'A'; row <= 'F'; row++)
             {
                 <tr>
-                    <td>@row</td> <!-- Afișează litera rândului -->
+                    <td>@row</td>
                     @for (int seat = 1; seat <= 11; seat++)
                     {
                         <td>
@@ -40,9 +45,10 @@
         </tbody>
     </table>
 
+    <div class="form-group">
+        <label asp-for="Reservation.ReservationDate" class="control-label">Reservation Date & Time</label>
+        <input asp-for="Reservation.ReservationDate" class="form-control" type="datetime-local" />
+    </div>
+
     <button type="submit" class="btn btn-primary">Reserve</button>
 </form>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>

@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using CinemaAplicatieWEB.Data;
 using CinemaAplicatieWEB.Models;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaAplicatieWEB.Pages.Reservations
 {
     public class DetailsModel : PageModel
     {
-        private readonly CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext _context;
+        private readonly CinemaAplicatieWEBContext _context;
 
-        public DetailsModel(CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext context)
+        public DetailsModel(CinemaAplicatieWEBContext context)
         {
             _context = context;
         }
@@ -23,20 +20,14 @@ namespace CinemaAplicatieWEB.Pages.Reservations
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var reservation = await _context.Reservation.FirstOrDefaultAsync(m => m.Id == id);
-            if (reservation == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Reservation = reservation;
-            }
+            Reservation = await _context.Reservation
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Reservation == null) return NotFound();
+
             return Page();
         }
     }

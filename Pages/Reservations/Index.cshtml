@@ -2,53 +2,38 @@
 @model CinemaAplicatieWEB.Pages.Reservations.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Reservations";
 }
 
-<h1>Index</h1>
+<h1>Reservations</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="./Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservation[0].Seats)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservation[0].ReservationTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservation[0].User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservation[0].Showtime)
-            </th>
+            <th>Seats</th>
+            <th>Reservation Date & Time</th>
+            <th>User</th>
+            <th>Hall</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Reservation) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Seats)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReservationTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Showtime.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Reservations)
+        {
+            <tr>
+                <td>@item.Seats</td>
+                <td>@item.ReservationDate</td>
+                <td>@item.User.Name</td>
+                <td>@item.Hall.Name</td> <!-- Afișare sală -->
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

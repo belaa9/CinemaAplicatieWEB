@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using CinemaAplicatieWEB.Data;
 using CinemaAplicatieWEB.Models;
+using System.Threading.Tasks;
 
 namespace CinemaAplicatieWEB.Pages.Reservations
 {
     public class DeleteModel : PageModel
     {
-        private readonly CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext _context;
+        private readonly CinemaAplicatieWEBContext _context;
 
-        public DeleteModel(CinemaAplicatieWEB.Data.CinemaAplicatieWEBContext context)
+        public DeleteModel(CinemaAplicatieWEBContext context)
         {
             _context = context;
         }
@@ -24,36 +20,22 @@ namespace CinemaAplicatieWEB.Pages.Reservations
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var reservation = await _context.Reservation.FirstOrDefaultAsync(m => m.Id == id);
+            Reservation = await _context.Reservation.FindAsync(id);
+            if (Reservation == null) return NotFound();
 
-            if (reservation == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Reservation = reservation;
-            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var reservation = await _context.Reservation.FindAsync(id);
             if (reservation != null)
             {
-                Reservation = reservation;
-                _context.Reservation.Remove(Reservation);
+                _context.Reservation.Remove(reservation);
                 await _context.SaveChangesAsync();
             }
 
